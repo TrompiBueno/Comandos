@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visor de documento</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background: #111827;
+  color: white;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: #1f2937;
+}
+
+h1 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+button, .download {
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 7px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button {
+  background: #374151;
+  color: white;
+}
+
+button:hover {
+  background: #4b5563;
+}
+
+.download {
+  display: inline-block;
+  background: #2563eb;
+  color: white;
+  text-decoration: none;
+}
+
+main {
+  flex: 1;
+  min-height: 0;
+  padding: 5px;
+}
+
+#visor {
+  width: 100%;
+  height: 100%;
+  min-height: 70vh;
+  border: none;
+  background: white;
+  border-radius: 5px;
+}
+
+@media (max-width: 600px) {
+  header {
+    align-items: flex-start;
+  }
+
+  .controls {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .controls button,
+  .controls a {
+    flex: 1;
+    text-align: center;
+  }
+
+  #visor {
+    min-height: 75vh;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Documento</h1>
+
+  <div class="controls">
+    <a
+      class="download"
+      id="descargar"
+      target="_blank"
+      rel="noopener"
+    >
+      Descargar PDF
+    </a>
+
+    <button onclick="pantallaCompleta()">
+      ⛶ Pantalla completa
+    </button>
+  </div>
+</header>
+
+<main id="contenedor">
+  <iframe
+    id="visor"
+    title="Documento de Google Docs"
+    allowfullscreen
+  ></iframe>
+</main>
+
+<script>
+const ID_DOCUMENTO =
+  "1rmXFTHVhMdNUPUxp0zvTpRqxY74OPPdj5cN8Yul0oDM";
+
+document.getElementById("visor").src =
+  "https://docs.google.com/document/d/" +
+  ID_DOCUMENTO +
+  "/preview";
+
+document.getElementById("descargar").href =
+  "https://docs.google.com/document/d/" +
+  ID_DOCUMENTO +
+  "/export?format=pdf";
+
+function pantallaCompleta() {
+  const contenedor = document.getElementById("contenedor");
+
+  if (!document.fullscreenElement) {
+    contenedor.requestFullscreen().catch(() => {});
+  } else {
+    document.exitFullscreen();
+  }
+}
+</script>
+
+</body>
+</html>
